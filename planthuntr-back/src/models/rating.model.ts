@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasOne} from '@loopback/repository';
+import {User} from './user.model';
 
 @model()
 export class Rating extends Entity {
@@ -8,19 +9,6 @@ export class Rating extends Entity {
     generated: true,
   })
   id_rating?: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  id_user_seller: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  id_user_buyer: string;
-
   @property({
     type: 'number',
     required: true,
@@ -43,6 +31,11 @@ export class Rating extends Entity {
   })
   comment_buyer?: string;
 
+  @hasOne(() => User, {keyTo: 'id_user_seller'})
+  id_user_seller: User;
+
+  @hasOne(() => User, {keyTo: 'id_user_buyer'})
+  id_user_buyer: User;
 
   constructor(data?: Partial<Rating>) {
     super(data);

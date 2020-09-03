@@ -1,15 +1,8 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasOne} from '@loopback/repository';
+import {User} from './user.model';
 
 @model()
 export class Seller extends Entity {
-  @property({
-    type: 'string',
-    id: true,
-    generated: false,
-    required: true,
-  })
-  id_user_seller: string;
-
   @property({
     type: 'string',
     required: true,
@@ -56,6 +49,8 @@ export class Seller extends Entity {
   })
   visa_mastercard: boolean;
 
+  @hasOne(() => User, {keyTo: 'id_user'})
+  id_user_seller: User;
 
   constructor(data?: Partial<Seller>) {
     super(data);

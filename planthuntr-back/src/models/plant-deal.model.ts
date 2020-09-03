@@ -1,4 +1,9 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo, hasOne, hasMany} from '@loopback/repository';
+import {User} from './user.model';
+import {CollectionItem} from './collection-item.model';
+import {Auction} from './auction.model';
+import {PaymentMethod} from './payment-method.model';
+import {DealPayment} from './deal-payment.model';
 
 @model()
 export class PlantDeal extends Entity {
@@ -8,19 +13,6 @@ export class PlantDeal extends Entity {
     generated: true,
   })
   id_deal?: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  id_user: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  id_collection_item: string;
-
   @property({
     type: 'string',
     required: true,
@@ -55,6 +47,22 @@ export class PlantDeal extends Entity {
   })
   acquirer?: string;
 
+  @belongsTo(() => User, {name: 'user'})
+  id_user: string;
+
+  @hasOne(() => CollectionItem, {keyTo: 'id_collection_item'})
+  id_collection_item: CollectionItem;
+
+  @property({
+    type: 'string',
+  })
+  id_plant?: string;
+
+  @hasOne(() => Auction, {keyTo: 'id_plant_deal'})
+  id_plant_deal: Auction;
+
+  @hasMany(() => PaymentMethod, {through: {model: () => DealPayment, keyFrom: 'id_payment_method'}})
+  paymentMethods: PaymentMethod[];
 
   constructor(data?: Partial<PlantDeal>) {
     super(data);

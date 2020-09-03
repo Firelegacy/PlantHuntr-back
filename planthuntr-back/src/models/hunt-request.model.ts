@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo, hasOne} from '@loopback/repository';
+import {User} from './user.model';
+import {Plant} from './plant.model';
 
 @model()
 export class HuntRequest extends Entity {
@@ -8,13 +10,6 @@ export class HuntRequest extends Entity {
     generated: true,
   })
   id_hunt?: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  id_user: string;
-
   @property({
     type: 'date',
     required: true,
@@ -38,6 +33,11 @@ export class HuntRequest extends Entity {
   })
   last_update: string;
 
+  @belongsTo(() => User, {name: 'requester'})
+  id_user: string;
+
+  @hasOne(() => Plant, {keyTo: 'id_plant'})
+  id_plant: Plant;
 
   constructor(data?: Partial<HuntRequest>) {
     super(data);

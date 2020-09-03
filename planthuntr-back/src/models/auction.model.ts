@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo, hasMany, hasOne} from '@loopback/repository';
+import {PlantDeal} from './plant-deal.model';
+import {Bid} from './bid.model';
 
 @model()
 export class Auction extends Entity {
@@ -8,13 +10,6 @@ export class Auction extends Entity {
     generated: true,
   })
   id_auction?: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  id_plant_deal: string;
-
   @property({
     type: 'date',
     required: true,
@@ -45,11 +40,14 @@ export class Auction extends Entity {
   })
   bid_raise?: number;
 
-  @property({
-    type: 'string',
-  })
-  winning_bid?: string;
+  @belongsTo(() => PlantDeal, {name: 'PlantDeal'})
+  id_plant_deal: string;
 
+  @hasMany(() => Bid, {keyTo: 'id_auction'})
+  bids: Bid[];
+
+  @hasOne(() => Bid, {keyTo: 'id_bid'})
+  winning_bid: Bid;
 
   constructor(data?: Partial<Auction>) {
     super(data);

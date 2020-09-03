@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany, belongsTo} from '@loopback/repository';
+import {WishlistItem} from './wishlist-item.model';
+import {User} from './user.model';
 
 @model()
 export class Wishlist extends Entity {
@@ -8,13 +10,6 @@ export class Wishlist extends Entity {
     generated: true,
   })
   id_wishlist?: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  id_user: string;
-
   @property({
     type: 'date',
     required: true,
@@ -27,6 +22,11 @@ export class Wishlist extends Entity {
   })
   name?: string;
 
+  @hasMany(() => WishlistItem, {keyTo: 'id_wishlist'})
+  wishlistItems: WishlistItem[];
+
+  @belongsTo(() => User, {name: 'User'})
+  id_user: string;
 
   constructor(data?: Partial<Wishlist>) {
     super(data);

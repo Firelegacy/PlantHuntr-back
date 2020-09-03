@@ -1,4 +1,8 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasOne, hasMany} from '@loopback/repository';
+import {Wishlist} from './wishlist.model';
+import {Collection} from './collection.model';
+import {HuntRequest} from './hunt-request.model';
+import {PlantDeal} from './plant-deal.model';
 
 @model()
 export class User extends Entity {
@@ -84,6 +88,27 @@ export class User extends Entity {
   })
   verification_pic?: string;
 
+  @hasOne(() => Wishlist, {keyTo: 'id_user'})
+  wishlist: Wishlist;
+
+  @hasOne(() => Collection, {keyTo: 'id_user'})
+  collection: Collection;
+
+  @hasMany(() => HuntRequest, {keyTo: 'id_user'})
+  huntRequests: HuntRequest[];
+
+  @property({
+    type: 'string',
+  })
+  id_user_seller?: string;
+
+  @property({
+    type: 'string',
+  })
+  id_user_buyer?: string;
+
+  @hasMany(() => PlantDeal, {keyTo: 'id_user'})
+  plantDeals: PlantDeal[];
 
   constructor(data?: Partial<User>) {
     super(data);

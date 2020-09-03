@@ -1,20 +1,14 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo, hasMany} from '@loopback/repository';
+import {User} from './user.model';
+import {CollectionItem} from './collection-item.model';
 
 @model()
 export class Collection extends Entity {
-  @property({
-    type: 'string',
-    id: true,
-    generated: true,
-  })
-  id_collection?: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
+  @belongsTo(() => User, {name: 'owner'})
   id_user: string;
 
+  @hasMany(() => CollectionItem, {keyTo: 'id_collection'})
+  collectionItems: CollectionItem[];
 
   constructor(data?: Partial<Collection>) {
     super(data);

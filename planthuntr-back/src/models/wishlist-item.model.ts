@@ -1,4 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo, hasOne} from '@loopback/repository';
+import {Wishlist} from './wishlist.model';
+import {Plant} from './plant.model';
 
 @model()
 export class WishlistItem extends Entity {
@@ -8,19 +10,11 @@ export class WishlistItem extends Entity {
     generated: true,
   })
   id_wishlist_item?: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
+  @belongsTo(() => Wishlist, {name: 'Wishlist'})
   id_wishlist: string;
 
-  @property({
-    type: 'string',
-    required: true,
-  })
-  id_plant: string;
-
+  @hasOne(() => Plant, {keyTo: 'id_plant'})
+  id_plant: Plant;
 
   constructor(data?: Partial<WishlistItem>) {
     super(data);

@@ -1,14 +1,9 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasOne} from '@loopback/repository';
+import {User} from './user.model';
+import {StockItem} from './stock-item.model';
 
 @model()
 export class Buyer extends Entity {
-  @property({
-    type: 'string',
-    id: true,
-    generated: false,
-    required: true,
-  })
-  id_user_buyer: string;
 
   @property({
     type: 'string',
@@ -21,13 +16,17 @@ export class Buyer extends Entity {
     required: true,
   })
   id_payment_method: string;
-
   @property({
-    type: 'string',
-    required: true,
+    type: 'number',
+    default: 1,
   })
-  id_stock_item: string;
+  quantity: number;
 
+  @hasOne(() => User, {keyTo: 'id_user'})
+  id_user_buyer: User;
+
+  @hasOne(() => StockItem, {keyTo: 'id_stock_item'})
+  id_stock_item: StockItem;
 
   constructor(data?: Partial<Buyer>) {
     super(data);

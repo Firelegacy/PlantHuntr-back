@@ -13,14 +13,12 @@ export class DealPayment extends Entity {
     type: 'string',
     required: true,
   })
-  id_payment_method: string;
+  id_plant_deal: string;
 
   @property({
     type: 'string',
-    required: true,
   })
-  id_plant_deal: string;
-
+  id_payment_method?: string;
 
   constructor(data?: Partial<DealPayment>) {
     super(data);
