@@ -8,6 +8,7 @@
 ## Technologies
 
 The frontend part is built in <a href="https://reactjs.org/">React</a> using <a href="https://chakra-ui.com/">ChakraUI</a> component library.
+The backend part is built using <a href="https://nestjs.com/">NestJS</a> with <a href="https://typeorm.io/#/">TypeORM</a> as the entity provider.
 
 ## License
 
