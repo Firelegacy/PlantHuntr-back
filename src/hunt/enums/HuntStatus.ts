@@ -1,0 +1,7 @@
+export enum HuntStatus {
+  REQUESTED = 'REQUESTED',
+  SEARCHING = 'SEARCHING',
+  FOUND = 'FOUND',
+  IMPORTED = 'IMPORTED',
+  READY = 'READY',
+}

@@ -29,18 +29,20 @@ import { WantedSwap } from './plant-deal/wanted-swap';
 import { Payment } from './payment/payment';
 import { StockPlant } from './stock/stock-plant';
 import { Stock } from './stock/stock';
+import { HuntModule } from './hunt/hunt.module';
+import { Hunt } from './hunt/hunt';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-        type: 'mysql',
-        host: 'localhost',
-        port: 3306,
-        username: 'root',
-        password: 'root',
-        database: 'planthuntr_db',
-        entities: [User, Rating, Wishlist, WishlistPlant, Collection, CollectionPlant, Plant, Surname,
-          PlantDeal, DealPayment, WantedSwap, Payment, Auction, Bid, Seller, Stock, StockPlant],
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'root',
+      database: 'planthuntr_db',
+      entities: [User, Rating, Hunt, Wishlist, WishlistPlant, Collection, CollectionPlant, Plant, Surname,
+        PlantDeal, DealPayment, WantedSwap, Payment, Auction, Bid, Seller, Stock, StockPlant],
         synchronize: true,
         logging: true,
       },
@@ -54,6 +56,7 @@ import { Stock } from './stock/stock';
     StockModule,
     AuctionModule,
     PaymentModule,
+    HuntModule,
   ],
   controllers: [AppController],
   providers: [AppService],
