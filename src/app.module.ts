@@ -3,41 +3,53 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
-import { UserModule } from './user/user.module';
-import { SellerModule } from './seller/seller.module';
-import { WishlistModule } from './wishlist/wishlist.module';
-import { CollectionModule } from './collection/collection.module';
-import {User} from "./user/user";
 import { PlantModule } from './plant/plant.module';
-import {Seller} from "./seller/seller";
-import {Wishlist} from "./wishlist/wishlist";
-import {Collection} from "./collection/collection";
-import {CollectionPlant} from "./collection/collection-plant";
-import {WishlistPlant} from "./wishlist/wishlist-plant";
-import {Plant} from "./plant/plant";
+import { UserModule } from './user/user.module';
+import { CheckoutModule } from './checkout/checkout.module';
+import { WantedSwap } from './plant-deal/wanted-swap';
+import { Item } from './checkout/item';
+import { Bid } from './plant-deal/bid';
+import { Auction } from './plant-deal/auction';
+import { PlantDeal } from './plant-deal/plant-deal';
+import { StockPlant } from './user/stock-plant';
+import { OrderItem } from './checkout/order-item';
+import { Order } from './checkout/order';
+import { BasketItem } from './checkout/basket-item';
+import { PaymentMethod } from './user/payment-method';
+import { User } from './user/user';
+import { Surname } from './plant/surname';
+import { Plant } from './plant/plant';
+import { PlantDealModule } from './plant-deal/plant-deal.module';
+import { Review } from './review/review';
+import { ReviewModule } from './review/review.module';
+import { HuntModule } from './hunt/hunt.module';
+import { Hunt } from './hunt/hunt';
+import { CollectionPlant } from './user/collection-plant';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-          type: 'mysql',
-          host: 'localhost',
-          port: 3306,
-          username: 'root',
-          password: 'root',
-          database: 'planthuntr_db',
-          entities: [ User, Seller, Wishlist, WishlistPlant, Collection, CollectionPlant, Plant ],
-          synchronize: true,
-          logging: true,
-        }
+        type: 'mysql',
+        host: 'localhost',
+        port: 3306,
+        username: 'root',
+        password: 'root',
+        database: 'planthuntr',
+        entities: [Plant, Surname, User, Review, Hunt, PaymentMethod, Item, BasketItem, Order, OrderItem, CollectionPlant, StockPlant, PlantDeal, Auction, Bid, WantedSwap],
+        synchronize: true,
+        logging: true,
+      },
     ),
+
     UserModule,
-    SellerModule,
-    WishlistModule,
-    CollectionModule,
     PlantModule,
+    CheckoutModule,
+    ReviewModule,
+    PlantDealModule,
+    HuntModule,
   ],
   controllers: [AppController],
-  providers: [AppService]
+  providers: [AppService],
 })
 export class AppModule {
   constructor(private connection: Connection) {}

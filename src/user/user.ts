@@ -1,109 +1,168 @@
-import {Column, Entity, Index, JoinColumn, OneToOne, PrimaryGeneratedColumn} from "typeorm";
-import {UserType} from "./enums/UserType";
-import {AuthenticationType} from "./enums/AuthenticationType";
-import {Seller} from "../seller/seller";
-import {Collection} from "../collection/collection";
-import {Wishlist} from "../wishlist/wishlist";
+import { Column, Entity, Index, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { UserType } from '../enum/UserType';
+import { AuthenticationType } from '../enum/AuthenticationType';
+import { StockPlant } from './stock-plant';
+import { PaymentMethod } from './payment-method';
+import { BasketItem } from '../checkout/basket-item';
+import { Order } from '../checkout/order';
+import { Review } from '../review/review';
+import { Hunt } from '../hunt/hunt';
+import { Plant } from '../plant/plant';
+import { CollectionPlant } from './collection-plant';
 
-@Entity({name: "user"})
+@Entity({ name: 'users' })
 export class User {
 
-    @PrimaryGeneratedColumn("uuid", {name: "id_user"})
-    id: string;
+  @PrimaryGeneratedColumn('uuid', { name: 'id_user' })
+  id: string;
 
-    @Index({unique: true})
-    @Column({
-        type: "varchar",
-        length: 25
-    })
-    username: string;
+  @Index({ unique: true })
+  @Column({
+    type: 'varchar',
+    length: 25,
+  })
+  username: string;
 
-    @Column({
-        type: "varchar",
-        length: 256
-    })
-    password: string;
+  @Column({
+    type: 'varchar',
+    length: 256,
+  })
+  password: string;
 
-    @Column({
-        type: "datetime",
-        name: "birthday"
-    })
-    birthday: Date;
+  @Column({
+    type: 'varchar',
+    length: 50,
+  })
+  firstname: string;
 
-    @Column({
-        type: "varchar",
-        length: 45
-    })
-    country: string;
+  @Column({
+    type: 'varchar',
+    length: 50,
+  })
+  lastname: string;
 
-    @Column({
-        type: "varchar",
-        length: 100
-    })
-    town: string;
+  @Column({
+    type: 'datetime',
+    name: 'birthday',
+  })
+  birthday: Date;
 
-    @Column({
-        type: "varchar",
-        length: 50
-    })
-    firstname: string;
+  @Column({
+    type: 'varchar',
+    length: 45,
+  })
+  country: string;
 
-    @Column({
-        type: "varchar",
-        length: 50
-    })
-    lastname: string;
+  @Column({
+    type: 'varchar',
+    length: 100,
+    nullable: true,
+  })
+  town: string;
 
-    @Column({
-        type: "varchar",
-        length: 30
-    })
-    phone: string;
+  @Column({
+    type: 'varchar',
+    length: 150,
+    nullable: true,
+  })
+  address: string;
 
-    @Column({
-        type: "varchar",
-        length: 150
-    })
-    email: string;
+  @Column({
+    type: 'varchar',
+    length: 30,
+    nullable: true,
+  })
+  phone: string;
 
-    @Column({
-        type: "enum",
-        enum: UserType,
-        default: UserType.LAMBDA,
-        name: "user_type"
-    })
-    userType: UserType;
+  @Column({
+    type: 'varchar',
+    length: 150,
+  })
+  email: string;
 
-    @Column({
-        type: "enum",
-        enum: AuthenticationType,
-        default: AuthenticationType.LOCAL,
-        name: "auth_client"
-    })
-    authenticationClient: string;
+  @Column({
+    type: 'enum',
+    enum: UserType,
+    default: UserType.LAMBDA,
+    name: 'user_type',
+  })
+  userType: UserType;
 
-    @Column({
-        type: "varchar",
-        length: 256,
-        name: "verification_pic"
-    })
-    verificationPicture: string;
+  @Column({
+    type: 'enum',
+    enum: AuthenticationType,
+    default: AuthenticationType.LOCAL,
+    name: 'auth_client',
+  })
+  authenticationClient: string;
 
-    @OneToOne(type => Wishlist)
-    @JoinColumn({
-        referencedColumnName: "id"
-    })
-    wishlist: Wishlist;
+  @Column({
+    type: 'varchar',
+    length: 256,
+    name: 'verification_pic',
+    nullable: true,
+  })
+  verificationPicture: string;
 
-    @OneToOne(type => Collection)
-    @JoinColumn({
-        referencedColumnName: "id"
-    })
-    collection: Collection;
+  @OneToMany(() => PaymentMethod, (paymentMethod) => paymentMethod.user)
+  paymentMethods: PaymentMethod[];
 
-    @OneToOne(type => Seller)
-    @JoinColumn({
-        referencedColumnName: "id"
-    })
-    seller: Seller;
+  @OneToMany(() => BasketItem, (basketItem) => basketItem.user)
+  basket: BasketItem[];
+
+  @OneToMany(() => Order, (order) => order.buyer)
+  orders: Order[];
+
+  @OneToMany(() => Hunt, (hunt) => hunt.user)
+  hunts: Hunt[];
+
+  @ManyToMany(() => Plant)
+  @JoinTable({ name: 'wishlist_plants' })
+  wishlist: Plant[];
+
+  @OneToMany(() => CollectionPlant, (collectionnPlant) => collectionnPlant.user)
+  @JoinTable()
+  collection: CollectionPlant[];
+
+  @OneToMany(() => Review, review => review.buyer, { lazy: true })
+  sellerReviews: Review[];
+
+  @OneToMany(() => Review, review => review.seller, { lazy: true })
+  clientReviews: Review[];
+
+  /* Seller specific - UserType.SELLER */
+  /* if UserType.SELLER then the following fields are not nullable */
+
+  @Index({ unique: true })
+  @Column({
+    type: 'varchar',
+    length: 50,
+    name: 'company_id_number',
+    nullable: true,
+  })
+  companyNumber: string;
+
+  @Column({
+    type: 'varchar',
+    length: 30,
+    name: 'business_phone',
+    nullable: true,
+  })
+  businessPhone: string;
+
+  @Column({
+    type: 'varchar',
+    length: 150,
+    name: 'business_email',
+    nullable: true,
+  })
+  businessEmail: string;
+
+  // stays empty if not UserType.SELLER
+  @OneToMany(() => StockPlant, (stockPlant) => stockPlant.user)
+  stock: StockPlant[];
+
+  // stays empty if not UserType.SELLER
+  @OneToMany(() => Order, (order) => order.seller)
+  sales: Order[];
 }
