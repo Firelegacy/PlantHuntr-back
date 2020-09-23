@@ -42,13 +42,13 @@ export class Auction {
   })
   bidRaise: number;
 
-  @OneToOne(type => Bid)
+  @OneToOne(() => Bid)
   @JoinColumn({
     referencedColumnName: 'id',
   })
   winningBid: Bid;
 
-  @OneToOne(type => PlantDeal)
+  @OneToOne(() => PlantDeal)
   @JoinColumn({
     referencedColumnName: 'id',
   })

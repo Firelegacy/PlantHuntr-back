@@ -21,13 +21,13 @@ export class Bid {
   })
   timestamp: Date;
 
-  @OneToOne(type => User)
+  @OneToOne(() => User)
   @JoinColumn({
     referencedColumnName: 'id',
   })
   user: User;
 
-  @OneToOne(type => Auction)
+  @OneToOne(() => Auction)
   @JoinColumn({
     referencedColumnName: 'id',
   })

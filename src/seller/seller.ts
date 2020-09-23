@@ -1,13 +1,13 @@
-import { Column, Entity, Index, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
 import { User } from '../user/user';
 
 @Entity({ name: 'seller' })
 export class Seller {
 
-  @PrimaryGeneratedColumn(
-    'uuid',
-    { name: 'id_seller' })
-  id: string;
+  @PrimaryColumn({ type: 'uuid', name: 'id_user_seller' })
+  @OneToOne(() => User, (user) => user.id)
+  @JoinColumn()
+  user: User;
 
   @Column({
     type: 'varchar',
@@ -43,31 +43,11 @@ export class Seller {
   })
   businessEmail: string;
 
-  @Column({
-    type: 'boolean',
-    default: false,
-    name: 'paypal',
-  })
-  hasPaypal: boolean;
-
-  @Column({
-    type: 'boolean',
-    default: false,
-    name: 'sepa',
-  })
-  hasSEPA: boolean;
-
-  @Column({
-    type: 'boolean',
-    default: false,
-    name: 'visa_mastercard',
-  })
-  hasVisaMastercard: boolean;
-
-  @Index({ unique: true })
-  @OneToOne(type => User)
-  @JoinColumn({
-    referencedColumnName: 'id',
-  })
-  user: User;
+  /*
+   @OneToOne(() => Stock)
+   @JoinColumn({
+   referencedColumnName: 'id',
+   })
+   stock: Stock;
+   */
 }

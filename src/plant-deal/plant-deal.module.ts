@@ -5,12 +5,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Auction } from '../auction/auction';
 import { PlantDeal } from './plant-deal';
 import { User } from '../user/user';
-import { Collection } from '../collection/collection';
 import { Plant } from '../plant/plant';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([PlantDeal, Plant, User, Collection, Auction]),
+    TypeOrmModule.forFeature([PlantDeal, Plant, User, Auction]),
   ],
   providers: [PlantDealService],
   controllers: [PlantDealController],

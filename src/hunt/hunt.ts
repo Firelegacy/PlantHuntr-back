@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { User } from '../user/user';
 import { Plant } from '../plant/plant';
-import { HuntStatus } from './enums/HuntStatus';
+import { HuntStatus } from '../enum/HuntStatus';
 
 @Entity({ name: 'hunt' })
 export class Hunt {
@@ -45,13 +45,13 @@ export class Hunt {
   })
   lastUpdate: Date;
 
-  @OneToOne(type => User)
+  @OneToOne(() => User)
   @JoinColumn({
     referencedColumnName: 'id',
   })
   user: User;
 
-  @OneToOne(type => Plant)
+  @OneToOne(() => Plant)
   @JoinColumn({
     referencedColumnName: 'id',
   })

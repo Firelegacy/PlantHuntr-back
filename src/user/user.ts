@@ -1,9 +1,7 @@
 import { Column, Entity, Index, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { UserType } from './enums/UserType';
-import { AuthenticationType } from './enums/AuthenticationType';
+import { UserType } from '../enum/UserType';
+import { AuthenticationType } from '../enum/AuthenticationType';
 import { Seller } from '../seller/seller';
-import { Collection } from '../collection/collection';
-import { Wishlist } from '../wishlist/wishlist';
 
 @Entity({ name: 'user' })
 export class User {
@@ -39,6 +37,7 @@ export class User {
   @Column({
     type: 'varchar',
     length: 100,
+    nullable: true,
   })
   town: string;
 
@@ -57,6 +56,7 @@ export class User {
   @Column({
     type: 'varchar',
     length: 30,
+    nullable: true,
   })
   phone: string;
 
@@ -86,24 +86,29 @@ export class User {
     type: 'varchar',
     length: 256,
     name: 'verification_pic',
+    nullable: true,
   })
   verificationPicture: string;
 
-  @OneToOne(type => Wishlist)
-  @JoinColumn({
-    referencedColumnName: 'id',
-  })
-  wishlist: Wishlist;
-
-  @OneToOne(type => Collection)
-  @JoinColumn({
-    referencedColumnName: 'id',
-  })
-  collection: Collection;
-
-  @OneToOne(type => Seller)
-  @JoinColumn({
-    referencedColumnName: 'id',
-  })
+  @OneToOne(() => Seller, (seller) => seller.user)
+  @JoinColumn()
   seller: Seller;
+
+  /*@ManyToMany(() => Plant)
+   @JoinTable({ name: 'wishlist_plants' })
+   wishlist: Plant[];*/
+
+  /*@ManyToMany(() => Plant)
+   @JoinTable({
+   name: 'collection_plants'
+   })
+   collection: Plant[];*/
+
+  /*
+   @OneToMany(() => Review, review => review.buyer, { lazy: true })
+   sellerReviews: Review[];
+
+   @OneToMany(() => Review, review => review.seller, { lazy: true })
+   clientReviews: Review[];
+   */
 }
