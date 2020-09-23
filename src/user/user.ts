@@ -1,4 +1,4 @@
-import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserType } from '../enum/UserType';
 import { AuthenticationType } from '../enum/AuthenticationType';
 import { StockPlant } from './stock-plant';
@@ -6,6 +6,9 @@ import { PaymentMethod } from './payment-method';
 import { BasketItem } from '../checkout/basket-item';
 import { Order } from '../checkout/order';
 import { Review } from '../review/review';
+import { Hunt } from '../hunt/hunt';
+import { Plant } from '../plant/plant';
+import { CollectionPlant } from './collection-plant';
 
 @Entity({ name: 'users' })
 export class User {
@@ -110,15 +113,16 @@ export class User {
   @OneToMany(() => Order, (order) => order.buyer)
   orders: Order[];
 
-  /*@ManyToMany(() => Plant)
-   @JoinTable({ name: 'wishlist_plants' })
-   wishlist: Plant[];*/
+  @OneToMany(() => Hunt, (hunt) => hunt.user)
+  hunts: Hunt[];
 
-  /*@ManyToMany(() => Plant)
-   @JoinTable({
-   name: 'collection_plants'
-   })
-   collection: Plant[];*/
+  @ManyToMany(() => Plant)
+  @JoinTable({ name: 'wishlist_plants' })
+  wishlist: Plant[];
+
+  @OneToMany(() => CollectionPlant, (collectionnPlant) => collectionnPlant.user)
+  @JoinTable()
+  collection: CollectionPlant[];
 
   @OneToMany(() => Review, review => review.buyer, { lazy: true })
   sellerReviews: Review[];

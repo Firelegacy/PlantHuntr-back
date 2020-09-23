@@ -3,7 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -45,14 +45,24 @@ export class Hunt {
   })
   lastUpdate: Date;
 
-  @OneToOne(() => User)
+  @ManyToOne(() => User, (user) => user.hunts, {
+    nullable: false,
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({
+    name: 'user',
     referencedColumnName: 'id',
   })
   user: User;
 
-  @OneToOne(() => Plant)
+  @ManyToOne(() => Plant, {
+    nullable: false,
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({
+    name: 'plant',
     referencedColumnName: 'id',
   })
   plant: Plant;

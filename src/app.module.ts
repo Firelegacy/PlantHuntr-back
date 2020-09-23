@@ -22,6 +22,9 @@ import { Plant } from './plant/plant';
 import { PlantDealModule } from './plant-deal/plant-deal.module';
 import { Review } from './review/review';
 import { ReviewModule } from './review/review.module';
+import { HuntModule } from './hunt/hunt.module';
+import { Hunt } from './hunt/hunt';
+import { CollectionPlant } from './user/collection-plant';
 
 @Module({
   imports: [
@@ -31,8 +34,8 @@ import { ReviewModule } from './review/review.module';
         port: 3306,
         username: 'root',
         password: 'root',
-        database: 'planthuntr_db',
-        entities: [Plant, Surname, User, Review, PaymentMethod, Item, BasketItem, Order, OrderItem, StockPlant, PlantDeal, Auction, Bid, WantedSwap],
+        database: 'planthuntr',
+        entities: [Plant, Surname, User, Review, Hunt, PaymentMethod, Item, BasketItem, Order, OrderItem, CollectionPlant, StockPlant, PlantDeal, Auction, Bid, WantedSwap],
         synchronize: true,
         logging: true,
       },
@@ -43,7 +46,7 @@ import { ReviewModule } from './review/review.module';
     CheckoutModule,
     ReviewModule,
     PlantDealModule,
-    // HuntModule,
+    HuntModule,
   ],
   controllers: [AppController],
   providers: [AppService],
