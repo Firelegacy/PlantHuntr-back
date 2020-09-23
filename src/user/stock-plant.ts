@@ -1,15 +1,13 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, Unique } from 'typeorm';
 import { Plant } from '../plant/plant';
 import { User } from './user';
 
-@Entity({ name: 'stock_plant' })
+@Entity({ name: 'stock_plants' })
+@Unique('seller_plant', ['user', 'plant'])
 export class StockPlant {
 
-  @PrimaryColumn('uuid', { name: 'id_user' })
-  idUser: string;
-
-  @PrimaryColumn('uuid', { name: 'id_plant' })
-  idPlant: string;
+  @PrimaryColumn('uuid', { name: 'id_stock_plant' })
+  id: string;
 
   @ManyToOne(() => User, (user) => user.stock, {
     primary: true,
@@ -17,7 +15,7 @@ export class StockPlant {
     onDelete: 'CASCADE',
   })
   @JoinColumn({
-    name: 'id_user',
+    name: 'user',
   })
   user: User;
 
@@ -27,7 +25,7 @@ export class StockPlant {
     onDelete: 'CASCADE',
   })
   @JoinColumn({
-    name: 'id_plant',
+    name: 'plant',
     referencedColumnName: 'id',
   })
   plant: Plant;

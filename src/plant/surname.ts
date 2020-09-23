@@ -1,7 +1,7 @@
 import { Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Plant } from './plant';
 
-@Entity({ name: 'surname' })
+@Entity({ name: 'surnames' })
 export class Surname {
 
   @PrimaryColumn({

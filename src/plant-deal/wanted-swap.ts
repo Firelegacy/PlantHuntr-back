@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Plant } from '../plant/plant';
 
-@Entity({ name: 'wanted_swap' })
+@Entity({ name: 'wanted_swaps' })
 export class WantedSwap {
 
   @PrimaryGeneratedColumn(

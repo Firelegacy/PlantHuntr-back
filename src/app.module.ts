@@ -10,6 +10,15 @@ import { User } from './user/user';
 import { UserModule } from './user/user.module';
 import { StockPlant } from './user/stock-plant';
 import { PaymentMethod } from './user/payment-method';
+import { CheckoutModule } from './checkout/checkout.module';
+import { PlantDeal } from './plant-deal/plant-deal';
+import { BasketItem } from './checkout/basket-item';
+import { Order } from './checkout/order';
+import { OrderItem } from './checkout/order-item';
+import { PlantDealModule } from './plant-deal/plant-deal.module';
+import { Bid } from './plant-deal/bid';
+import { Auction } from './plant-deal/auction';
+import { Item } from './checkout/item';
 
 @Module({
   imports: [
@@ -20,16 +29,16 @@ import { PaymentMethod } from './user/payment-method';
         username: 'root',
         password: 'root',
         database: 'planthuntr_db',
-        entities: [Plant, Surname, User, PaymentMethod, StockPlant],
+        entities: [Plant, Surname, User, PaymentMethod, BasketItem, Order, OrderItem, StockPlant, PlantDeal, Auction, Bid, Item],
         synchronize: true,
         logging: true,
       },
     ),
     UserModule,
     PlantModule,
+    CheckoutModule,
     // ReviewModule,
-    // PlantDealModule,
-    // AuctionModule,
+    PlantDealModule,
     // HuntModule,
   ],
   controllers: [AppController],

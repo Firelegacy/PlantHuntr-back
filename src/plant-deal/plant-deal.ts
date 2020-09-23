@@ -1,11 +1,11 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Auction } from '../auction/auction';
+import { Auction } from './auction';
 import { User } from '../user/user';
 import { Plant } from '../plant/plant';
 import { DealType } from '../enum/DealType';
 import { TransactionType } from '../enum/TransactionType';
 
-@Entity({ name: 'plant_deal' })
+@Entity({ name: 'plant_deals' })
 export class PlantDeal {
 
   @PrimaryGeneratedColumn(
@@ -49,34 +49,30 @@ export class PlantDeal {
 
   @OneToOne(() => Plant)
   @JoinColumn({
+    name: 'plant',
     referencedColumnName: 'id',
   })
   plant: Plant;
 
   @OneToOne(() => User)
   @JoinColumn({
+    name: 'user',
     referencedColumnName: 'id',
   })
   user: User;
 
   @OneToOne(() => User)
   @JoinColumn({
+    name: 'acquirer',
     referencedColumnName: 'id',
   })
   acquirer: User;
 
   @OneToOne(() => Auction)
-  @JoinColumn({
-    referencedColumnName: 'id',
-  })
   auction: Auction;
 
-  /*@OneToMany(() => DealPaymentMethod)
-   @JoinTable({ name: 'deal_payment_methods' })
-   paymentMethods: PaymentMethod[];
-
+  /*
    @OneToMany(() => WantedSwap, wantedSwap => wantedSwap.plantDeal)
    wantedForSwap: WantedSwap[];
-
    */
 }

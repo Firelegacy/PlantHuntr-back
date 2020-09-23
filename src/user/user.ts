@@ -3,8 +3,10 @@ import { UserType } from '../enum/UserType';
 import { AuthenticationType } from '../enum/AuthenticationType';
 import { StockPlant } from './stock-plant';
 import { PaymentMethod } from './payment-method';
+import { BasketItem } from '../checkout/basket-item';
+import { Order } from '../checkout/order';
 
-@Entity({ name: 'user' })
+@Entity({ name: 'users' })
 export class User {
 
   @PrimaryGeneratedColumn('uuid', { name: 'id_user' })
@@ -101,6 +103,12 @@ export class User {
   @OneToMany(() => PaymentMethod, (paymentMethod) => paymentMethod.user)
   paymentMethods: PaymentMethod[];
 
+  @OneToMany(() => BasketItem, (basketItem) => basketItem.user)
+  basket: BasketItem[];
+
+  @OneToMany(() => Order, (order) => order.buyer)
+  orders: Order[];
+
   /*@ManyToMany(() => Plant)
    @JoinTable({ name: 'wishlist_plants' })
    wishlist: Plant[];*/
@@ -150,4 +158,8 @@ export class User {
   // stays empty if not UserType.SELLER
   @OneToMany(() => StockPlant, (stockPlant) => stockPlant.user)
   stock: StockPlant[];
+
+  // stays empty if not UserType.SELLER
+  @OneToMany(() => Order, (order) => order.seller)
+  sales: Order[];
 }

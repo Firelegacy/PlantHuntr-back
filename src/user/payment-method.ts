@@ -2,7 +2,7 @@ import { Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { PaymentMethodName } from '../enum/PaymentMethodName';
 import { User } from './user';
 
-@Entity({ name: 'payment_method' })
+@Entity({ name: 'payment_methods' })
 export class PaymentMethod {
 
   @PrimaryColumn({ type: 'uuid', name: 'id_user' })

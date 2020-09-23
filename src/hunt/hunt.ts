@@ -11,7 +11,7 @@ import { User } from '../user/user';
 import { Plant } from '../plant/plant';
 import { HuntStatus } from '../enum/HuntStatus';
 
-@Entity({ name: 'hunt' })
+@Entity({ name: 'hunts' })
 export class Hunt {
 
   @PrimaryGeneratedColumn(

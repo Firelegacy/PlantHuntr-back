@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({ name: 'review' })
+@Entity({ name: 'reviews' })
 export class Review {
 
   @PrimaryGeneratedColumn('uuid', { name: 'id_rating' })

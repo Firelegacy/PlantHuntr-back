@@ -2,7 +2,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGenerate
 import { User } from '../user/user';
 import { Auction } from './auction';
 
-@Entity({ name: 'bid' })
+@Entity({ name: 'bids' })
 export class Bid {
 
   @PrimaryGeneratedColumn(
@@ -23,12 +23,14 @@ export class Bid {
 
   @OneToOne(() => User)
   @JoinColumn({
+    name: 'user',
     referencedColumnName: 'id',
   })
   user: User;
 
   @OneToOne(() => Auction)
   @JoinColumn({
+    name: 'auction',
     referencedColumnName: 'id',
   })
   auction: Auction;
