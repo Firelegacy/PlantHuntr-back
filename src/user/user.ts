@@ -5,6 +5,7 @@ import { StockPlant } from './stock-plant';
 import { PaymentMethod } from './payment-method';
 import { BasketItem } from '../checkout/basket-item';
 import { Order } from '../checkout/order';
+import { Review } from '../review/review';
 
 @Entity({ name: 'users' })
 export class User {
@@ -119,13 +120,11 @@ export class User {
    })
    collection: Plant[];*/
 
-  /*
-   @OneToMany(() => Review, review => review.buyer, { lazy: true })
-   sellerReviews: Review[];
+  @OneToMany(() => Review, review => review.buyer, { lazy: true })
+  sellerReviews: Review[];
 
-   @OneToMany(() => Review, review => review.seller, { lazy: true })
-   clientReviews: Review[];
-   */
+  @OneToMany(() => Review, review => review.seller, { lazy: true })
+  clientReviews: Review[];
 
   /* Seller specific - UserType.SELLER */
   /* if UserType.SELLER then the following fields are not nullable */

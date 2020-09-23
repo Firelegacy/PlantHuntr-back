@@ -1,6 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { User } from '../user/user';
 
 @Entity({ name: 'reviews' })
+@Unique('buyer_seller', ['buyer', 'seller'])
 export class Review {
 
   @PrimaryGeneratedColumn('uuid', { name: 'id_rating' })
@@ -22,6 +24,7 @@ export class Review {
     type: 'varchar',
     length: 256,
     name: 'seller_comment',
+    nullable: true,
   })
   sellerComment: string;
 
@@ -29,15 +32,24 @@ export class Review {
     type: 'varchar',
     length: 256,
     name: 'buyer_comment',
+    nullable: true,
   })
   buyerComment: string;
 
-  /*
-   @ManyToOne(() => User, user => user.clientReviews)
-   seller: User;
+  @ManyToOne(() => User, user => user.clientReviews, {
+    nullable: false,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'seller' })
+  seller: User;
 
-   @ManyToOne(() => User, user => user.sellerReviews)
-   buyer: User;
+  @ManyToOne(() => User, user => user.sellerReviews, {
+    nullable: false,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'buyer' })
+  buyer: User;
 
-   */
 }

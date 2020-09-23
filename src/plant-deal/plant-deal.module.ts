@@ -7,10 +7,11 @@ import { PlantDeal } from './plant-deal';
 import { User } from '../user/user';
 import { Plant } from '../plant/plant';
 import { Bid } from './bid';
+import { WantedSwap } from './wanted-swap';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([PlantDeal, Plant, User, Auction, Bid]),
+    TypeOrmModule.forFeature([PlantDeal, Plant, User, Auction, Bid, WantedSwap]),
   ],
   providers: [PlantDealService],
   controllers: [PlantDealController],

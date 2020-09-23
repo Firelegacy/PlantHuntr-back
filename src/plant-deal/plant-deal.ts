@@ -1,9 +1,10 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Auction } from './auction';
 import { User } from '../user/user';
 import { Plant } from '../plant/plant';
 import { DealType } from '../enum/DealType';
 import { TransactionType } from '../enum/TransactionType';
+import { WantedSwap } from './wanted-swap';
 
 @Entity({ name: 'plant_deals' })
 export class PlantDeal {
@@ -71,8 +72,6 @@ export class PlantDeal {
   @OneToOne(() => Auction)
   auction: Auction;
 
-  /*
    @OneToMany(() => WantedSwap, wantedSwap => wantedSwap.plantDeal)
    wantedForSwap: WantedSwap[];
-   */
 }
