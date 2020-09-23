@@ -1,4 +1,4 @@
-export enum PaymentMethod {
+export enum PaymentMethodName {
   SEPA = 'SEPA',
   PAYPAL = 'PAYPAL',
   VISA = 'VISA',

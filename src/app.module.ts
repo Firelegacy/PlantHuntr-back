@@ -6,10 +6,10 @@ import { Connection } from 'typeorm';
 import { PlantModule } from './plant/plant.module';
 import { Plant } from './plant/plant';
 import { Surname } from './plant/surname';
-import { Seller } from './seller/seller';
 import { User } from './user/user';
 import { UserModule } from './user/user.module';
-import { SellerModule } from './seller/seller.module';
+import { StockPlant } from './user/stock-plant';
+import { PaymentMethod } from './user/payment-method';
 
 @Module({
   imports: [
@@ -20,19 +20,16 @@ import { SellerModule } from './seller/seller.module';
         username: 'root',
         password: 'root',
         database: 'planthuntr_db',
-        entities: [Plant, Surname, User, Seller],
+        entities: [Plant, Surname, User, PaymentMethod, StockPlant],
         synchronize: true,
         logging: true,
       },
     ),
     UserModule,
-    SellerModule,
     PlantModule,
     // ReviewModule,
     // PlantDealModule,
-    // StockModule,
     // AuctionModule,
-    // PaymentModule,
     // HuntModule,
   ],
   controllers: [AppController],

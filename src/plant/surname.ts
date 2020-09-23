@@ -13,13 +13,15 @@ export class Surname {
 
   @PrimaryColumn({
     type: 'uuid',
-    name: 'plant_id',
+    name: 'id_plant',
   })
+  plantId: string;
+
   @ManyToOne(() => Plant, (plant) => plant.surnames, {
-    nullable: false,
+    primary: true,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   })
-  @JoinColumn()
+  @JoinColumn({ name: 'id_plant' })
   plant: Plant;
 }

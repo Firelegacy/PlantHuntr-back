@@ -1,7 +1,8 @@
-import { Column, Entity, Index, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserType } from '../enum/UserType';
 import { AuthenticationType } from '../enum/AuthenticationType';
-import { Seller } from '../seller/seller';
+import { StockPlant } from './stock-plant';
+import { PaymentMethod } from './payment-method';
 
 @Entity({ name: 'user' })
 export class User {
@@ -21,6 +22,18 @@ export class User {
     length: 256,
   })
   password: string;
+
+  @Column({
+    type: 'varchar',
+    length: 50,
+  })
+  firstname: string;
+
+  @Column({
+    type: 'varchar',
+    length: 50,
+  })
+  lastname: string;
 
   @Column({
     type: 'datetime',
@@ -43,15 +56,10 @@ export class User {
 
   @Column({
     type: 'varchar',
-    length: 50,
+    length: 150,
+    nullable: true,
   })
-  firstname: string;
-
-  @Column({
-    type: 'varchar',
-    length: 50,
-  })
-  lastname: string;
+  address: string;
 
   @Column({
     type: 'varchar',
@@ -90,9 +98,8 @@ export class User {
   })
   verificationPicture: string;
 
-  @OneToOne(() => Seller, (seller) => seller.user)
-  @JoinColumn()
-  seller: Seller;
+  @OneToMany(() => PaymentMethod, (paymentMethod) => paymentMethod.user)
+  paymentMethods: PaymentMethod[];
 
   /*@ManyToMany(() => Plant)
    @JoinTable({ name: 'wishlist_plants' })
@@ -111,4 +118,36 @@ export class User {
    @OneToMany(() => Review, review => review.seller, { lazy: true })
    clientReviews: Review[];
    */
+
+  /* Seller specific - UserType.SELLER */
+  /* if UserType.SELLER then the following fields are not nullable */
+
+  @Index({ unique: true })
+  @Column({
+    type: 'varchar',
+    length: 50,
+    name: 'company_id_number',
+    nullable: true,
+  })
+  companyNumber: string;
+
+  @Column({
+    type: 'varchar',
+    length: 30,
+    name: 'business_phone',
+    nullable: true,
+  })
+  businessPhone: string;
+
+  @Column({
+    type: 'varchar',
+    length: 150,
+    name: 'business_email',
+    nullable: true,
+  })
+  businessEmail: string;
+
+  // stays empty if not UserType.SELLER
+  @OneToMany(() => StockPlant, (stockPlant) => stockPlant.user)
+  stock: StockPlant[];
 }
