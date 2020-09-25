@@ -20,6 +20,7 @@ export class Plant {
     type: 'varchar',
     length: 100,
     name: 'scientific_name',
+    nullable: true,
   })
   scientificName: string;
 
@@ -75,6 +76,6 @@ export class Plant {
   })
   isVerified: boolean;
 
-  @OneToMany(() => Surname, (surname) => surname.plant)
+  @OneToMany(() => Surname, (surname) => surname.plant, { eager: true })
   surnames: Surname[];
 }

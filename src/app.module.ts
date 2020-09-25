@@ -5,26 +5,26 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { PlantModule } from './plant/plant.module';
 import { UserModule } from './user/user.module';
-import { CheckoutModule } from './checkout/checkout.module';
-import { WantedSwap } from './plant-deal/wanted-swap';
-import { Item } from './checkout/item';
-import { Bid } from './plant-deal/bid';
-import { Auction } from './plant-deal/auction';
-import { PlantDeal } from './plant-deal/plant-deal';
-import { StockPlant } from './user/stock-plant';
-import { OrderItem } from './checkout/order-item';
-import { Order } from './checkout/order';
-import { BasketItem } from './checkout/basket-item';
+import { Plant } from './plant/plant';
 import { PaymentMethod } from './user/payment-method';
+import { BasketItem } from './checkout/basket-item';
+import { Item } from './checkout/item';
+import { Hunt } from './hunt/hunt';
+import { Review } from './review/review';
 import { User } from './user/user';
 import { Surname } from './plant/surname';
-import { Plant } from './plant/plant';
-import { PlantDealModule } from './plant-deal/plant-deal.module';
-import { Review } from './review/review';
-import { ReviewModule } from './review/review.module';
-import { HuntModule } from './hunt/hunt.module';
-import { Hunt } from './hunt/hunt';
+import { Order } from './checkout/order';
+import { OrderItem } from './checkout/order-item';
 import { CollectionPlant } from './user/collection-plant';
+import { StockPlant } from './user/stock-plant';
+import { PlantDeal } from './plant-deal/plant-deal';
+import { Auction } from './plant-deal/auction';
+import { Bid } from './plant-deal/bid';
+import { WantedSwap } from './plant-deal/wanted-swap';
+import { CheckoutModule } from './checkout/checkout.module';
+import { ReviewModule } from './review/review.module';
+import { PlantDealModule } from './plant-deal/plant-deal.module';
+import { HuntModule } from './hunt/hunt.module';
 
 @Module({
   imports: [
@@ -36,6 +36,7 @@ import { CollectionPlant } from './user/collection-plant';
         password: 'root',
         database: 'planthuntr',
         entities: [Plant, Surname, User, Review, Hunt, PaymentMethod, Item, BasketItem, Order, OrderItem, CollectionPlant, StockPlant, PlantDeal, Auction, Bid, WantedSwap],
+        autoLoadEntities: true,
         synchronize: true,
         logging: true,
       },
