@@ -1,14 +1,15 @@
-import { Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ItemType } from '../enum/ItemType';
-import { PlantDeal } from '../plant-deal/plant-deal';
-import { StockPlant } from '../user/stock-plant';
+import { PlantDealEntity } from '../plant-deal/plant-deal.entity';
+import { StockPlantEntity } from '../user/stock-plant.entity';
 
-export class Item {
+@Entity('items')
+export class ItemEntity {
 
   @PrimaryGeneratedColumn('uuid', { name: 'id_item' })
   id: string;
 
-  @ManyToOne(() => PlantDeal, {
+  @ManyToOne(() => PlantDealEntity, {
     nullable: true,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
@@ -17,9 +18,9 @@ export class Item {
     name: 'id_deal',
     referencedColumnName: 'id',
   })
-  plantDeal: PlantDeal;
+  plantDeal: PlantDealEntity;
 
-  @ManyToOne(() => StockPlant, {
+  @ManyToOne(() => StockPlantEntity, {
     nullable: true,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
@@ -28,7 +29,7 @@ export class Item {
     name: 'stock_plant',
     referencedColumnName: 'id',
   })
-  stockPlant: StockPlant;
+  stockPlant: StockPlantEntity;
 
 
   @Column({

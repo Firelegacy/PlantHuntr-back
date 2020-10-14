@@ -1,31 +1,31 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsBoolean, IsString } from 'class-validator';
 
-export class UpdatePlantDTO {
-  @ApiProperty()
-  @IsString() readonly commonName?: string;
+export class UpdatePlantDto {
+  @ApiPropertyOptional()
+  @IsString() readonly commonName: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsString() readonly scientificName?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsString() readonly family?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsString() readonly subfamily?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsString() readonly genus?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsString() readonly firstPicture?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsString() readonly secondPicture?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsString() readonly thirdPicture?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsBoolean() readonly isVerified?: boolean;
 }

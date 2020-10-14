@@ -1,9 +1,9 @@
 import { Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { Plant } from './plant';
+import { PlantEntity } from './plant.entity';
 import { Exclude } from 'class-transformer';
 
 @Entity({ name: 'surnames' })
-export class Surname {
+export class SurnameEntity {
 
   @Exclude()
   @PrimaryColumn({
@@ -20,12 +20,12 @@ export class Surname {
   })
   surname: string;
 
-  @ManyToOne(() => Plant, (plant) => plant.surnames, {
+  @ManyToOne(() => PlantEntity, (plant) => plant.surnames, {
     primary: true,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'id_plant' })
-  plant: Plant;
+  plant: PlantEntity;
 
 }

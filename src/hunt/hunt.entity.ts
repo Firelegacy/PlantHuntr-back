@@ -7,12 +7,12 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { User } from '../user/user';
-import { Plant } from '../plant/plant';
+import { UserEntity } from '../user/user.entity';
+import { PlantEntity } from '../plant/plant.entity';
 import { HuntStatus } from '../enum/HuntStatus';
 
 @Entity({ name: 'hunts' })
-export class Hunt {
+export class HuntEntity {
 
   @PrimaryGeneratedColumn(
     'uuid',
@@ -45,7 +45,7 @@ export class Hunt {
   })
   lastUpdate: Date;
 
-  @ManyToOne(() => User, (user) => user.hunts, {
+  @ManyToOne(() => UserEntity, (user) => user.hunts, {
     nullable: false,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
@@ -54,9 +54,9 @@ export class Hunt {
     name: 'user',
     referencedColumnName: 'id',
   })
-  user: User;
+  user: UserEntity;
 
-  @ManyToOne(() => Plant, {
+  @ManyToOne(() => PlantEntity, {
     nullable: false,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
@@ -65,5 +65,5 @@ export class Hunt {
     name: 'plant',
     referencedColumnName: 'id',
   })
-  plant: Plant;
+  plant: PlantEntity;
 }

@@ -1,8 +1,8 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Surname } from './surname';
+import { SurnameEntity } from './surname.entity';
 
 @Entity({ name: 'plants' })
-export class Plant {
+export class PlantEntity {
 
   @PrimaryGeneratedColumn(
     'uuid',
@@ -76,6 +76,6 @@ export class Plant {
   })
   isVerified: boolean;
 
-  @OneToMany(() => Surname, (surname) => surname.plant, { eager: true })
-  surnames: Surname[];
+  @OneToMany(() => SurnameEntity, (surname) => surname.plant, { eager: true })
+  surnames: SurnameEntity[];
 }

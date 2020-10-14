@@ -1,6 +1,6 @@
 import { Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { PaymentMethodName } from '../enum/PaymentMethodName';
-import { User } from './user';
+import { UserEntity } from './user.entity';
 
 @Entity({ name: 'payment_methods' })
 export class PaymentMethod {
@@ -8,7 +8,7 @@ export class PaymentMethod {
   @PrimaryColumn({ type: 'uuid', name: 'id_user' })
   id: string;
 
-  @ManyToOne(() => User, (user) => user.paymentMethods,
+  @ManyToOne(() => UserEntity, (user) => user.paymentMethods,
     {
       primary: true,
       onUpdate: 'CASCADE',
@@ -18,7 +18,7 @@ export class PaymentMethod {
     name: 'id_user',
     referencedColumnName: 'id',
   })
-  user: User;
+  user: UserEntity;
 
   @PrimaryColumn({
     type: 'enum',

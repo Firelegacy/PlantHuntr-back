@@ -1,17 +1,17 @@
 import { Column, Entity, Index, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserType } from '../enum/UserType';
 import { AuthenticationType } from '../enum/AuthenticationType';
-import { StockPlant } from './stock-plant';
+import { StockPlantEntity } from './stock-plant.entity';
 import { PaymentMethod } from './payment-method';
-import { BasketItem } from '../checkout/basket-item';
-import { Order } from '../checkout/order';
-import { Review } from '../review/review';
-import { Hunt } from '../hunt/hunt';
-import { Plant } from '../plant/plant';
-import { CollectionPlant } from './collection-plant';
+import { BasketItemEntity } from '../checkout/basket-item.entity';
+import { OrderEntity } from '../checkout/order.entity';
+import { ReviewEntity } from '../review/review.entity';
+import { HuntEntity } from '../hunt/hunt.entity';
+import { PlantEntity } from '../plant/plant.entity';
+import { CollectionPlantEntity } from './collection-plant.entity';
 
 @Entity({ name: 'users' })
-export class User {
+export class UserEntity {
 
   @PrimaryGeneratedColumn('uuid', { name: 'id_user' })
   id: string;
@@ -107,28 +107,28 @@ export class User {
   @OneToMany(() => PaymentMethod, (paymentMethod) => paymentMethod.user)
   paymentMethods: PaymentMethod[];
 
-  @OneToMany(() => BasketItem, (basketItem) => basketItem.user)
-  basket: BasketItem[];
+  @OneToMany(() => BasketItemEntity, (basketItem) => basketItem.user)
+  basket: BasketItemEntity[];
 
-  @OneToMany(() => Order, (order) => order.buyer)
-  orders: Order[];
+  @OneToMany(() => OrderEntity, (order) => order.buyer)
+  orders: OrderEntity[];
 
-  @OneToMany(() => Hunt, (hunt) => hunt.user)
-  hunts: Hunt[];
+  @OneToMany(() => HuntEntity, (hunt) => hunt.user)
+  hunts: HuntEntity[];
 
-  @ManyToMany(() => Plant)
+  @ManyToMany(() => PlantEntity)
   @JoinTable({ name: 'wishlist_plants' })
-  wishlist: Plant[];
+  wishlist: PlantEntity[];
 
-  @OneToMany(() => CollectionPlant, (collectionnPlant) => collectionnPlant.user)
+  @OneToMany(() => CollectionPlantEntity, (collectionnPlant) => collectionnPlant.user)
   @JoinTable()
-  collection: CollectionPlant[];
+  collection: CollectionPlantEntity[];
 
-  @OneToMany(() => Review, review => review.buyer, { lazy: true })
-  sellerReviews: Review[];
+  @OneToMany(() => ReviewEntity, review => review.buyer, { lazy: true })
+  sellerReviews: ReviewEntity[];
 
-  @OneToMany(() => Review, review => review.seller, { lazy: true })
-  clientReviews: Review[];
+  @OneToMany(() => ReviewEntity, review => review.seller, { lazy: true })
+  clientReviews: ReviewEntity[];
 
   /* Seller specific - UserType.SELLER */
   /* if UserType.SELLER then the following fields are not nullable */
@@ -159,10 +159,10 @@ export class User {
   businessEmail: string;
 
   // stays empty if not UserType.SELLER
-  @OneToMany(() => StockPlant, (stockPlant) => stockPlant.user)
-  stock: StockPlant[];
+  @OneToMany(() => StockPlantEntity, (stockPlant) => stockPlant.user)
+  stock: StockPlantEntity[];
 
   // stays empty if not UserType.SELLER
-  @OneToMany(() => Order, (order) => order.seller)
-  sales: Order[];
+  @OneToMany(() => OrderEntity, (order) => order.seller)
+  sales: OrderEntity[];
 }

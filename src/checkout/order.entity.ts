@@ -1,29 +1,29 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { User } from '../user/user';
-import { OrderItem } from './order-item';
+import { UserEntity } from '../user/user.entity';
+import { OrderItemEntity } from './order-item.entity';
 import { OrderStatus } from '../enum/OrderStatus';
 
 @Entity('orders')
-export class Order {
+export class OrderEntity {
 
   @PrimaryGeneratedColumn('uuid', { name: 'id_order' })
   id: string;
 
-  @ManyToOne(() => User, (user) => user.orders, {
+  @ManyToOne(() => UserEntity, (user) => user.orders, {
     nullable: false,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'buyer' })
-  buyer: User;
+  buyer: UserEntity;
 
-  @ManyToOne(() => User, (user) => user.sales, {
+  @ManyToOne(() => UserEntity, (user) => user.sales, {
     nullable: false,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'seller' })
-  seller: User;
+  seller: UserEntity;
 
   @Column({
     type: 'double',
@@ -38,7 +38,7 @@ export class Order {
   })
   status: OrderStatus;
 
-  @OneToMany(() => OrderItem, (orderItem) => orderItem.order)
-  items: OrderItem[];
+  @OneToMany(() => OrderItemEntity, (orderItem) => orderItem.order)
+  items: OrderItemEntity[];
 
 }
