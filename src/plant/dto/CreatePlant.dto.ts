@@ -1,31 +1,31 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class CreatePlantDTO {
+export class CreatePlantDto {
   @ApiProperty()
   @IsString() @IsNotEmpty() readonly commonName: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional() @IsString() readonly scientificName?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional() @IsString() readonly family?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional() @IsString() readonly subfamily?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional() @IsString() readonly genus?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional() @IsString() readonly firstPicture?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional() @IsString() readonly secondPicture?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional() @IsString() readonly thirdPicture?: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional() @IsBoolean() isVerified?: boolean;
 }

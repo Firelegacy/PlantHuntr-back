@@ -9,8 +9,8 @@ import {
   Put,
   UseInterceptors,
 } from '@nestjs/common';
-import { CreatePlantDTO } from './dto/CreatePlantDTO';
-import { UpdatePlantDTO } from './dto/UpdatePlantDTO';
+import { CreatePlantDto } from './dto/CreatePlant.dto';
+import { UpdatePlantDto } from './dto/UpdatePlant.dto';
 import { PlantService } from './plant.service';
 import { ApiBody } from '@nestjs/swagger';
 
@@ -19,8 +19,8 @@ export class PlantController {
   constructor(private plantService: PlantService) {}
 
   @Post()
-  create(@Body() createPlantDTO: CreatePlantDTO) {
-    Logger.log('This action adds a new Plant in plants');
+  create(@Body() createPlantDTO: CreatePlantDto) {
+    Logger.log('This action adds a new PlantEntity in plants');
     return this.plantService.create(createPlantDTO);
   }
 
@@ -44,7 +44,7 @@ export class PlantController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updatePlantDTO: UpdatePlantDTO) {
+  update(@Param('id') id: string, @Body() updatePlantDTO: UpdatePlantDto) {
     Logger.log(`This action updates the plant with given id : #${id}`);
     return this.plantService.update(id, updatePlantDTO);
   }

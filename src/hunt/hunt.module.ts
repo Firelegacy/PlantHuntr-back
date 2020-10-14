@@ -2,13 +2,13 @@ import { Module } from '@nestjs/common';
 import { HuntController } from './hunt.controller';
 import { HuntService } from './hunt.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../user/user';
-import { Plant } from '../plant/plant';
-import { Hunt } from './hunt';
+import { UserEntity } from '../user/user.entity';
+import { PlantEntity } from '../plant/plant.entity';
+import { HuntEntity } from './hunt.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Hunt, Plant, User]),
+    TypeOrmModule.forFeature([HuntEntity, PlantEntity, UserEntity]),
   ],
   controllers: [HuntController],
   providers: [HuntService],

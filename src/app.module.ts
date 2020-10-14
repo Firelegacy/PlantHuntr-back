@@ -5,26 +5,27 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { PlantModule } from './plant/plant.module';
 import { UserModule } from './user/user.module';
-import { Plant } from './plant/plant';
+import { PlantEntity } from './plant/plant.entity';
 import { PaymentMethod } from './user/payment-method';
-import { BasketItem } from './checkout/basket-item';
-import { Item } from './checkout/item';
-import { Hunt } from './hunt/hunt';
-import { Review } from './review/review';
-import { User } from './user/user';
-import { Surname } from './plant/surname';
-import { Order } from './checkout/order';
-import { OrderItem } from './checkout/order-item';
-import { CollectionPlant } from './user/collection-plant';
-import { StockPlant } from './user/stock-plant';
-import { PlantDeal } from './plant-deal/plant-deal';
-import { Auction } from './plant-deal/auction';
-import { Bid } from './plant-deal/bid';
-import { WantedSwap } from './plant-deal/wanted-swap';
+import { BasketItemEntity } from './checkout/basket-item.entity';
+import { ItemEntity } from './checkout/item.entity';
+import { HuntEntity } from './hunt/hunt.entity';
+import { ReviewEntity } from './review/review.entity';
+import { UserEntity } from './user/user.entity';
+import { SurnameEntity } from './plant/surname.entity';
+import { OrderEntity } from './checkout/order.entity';
+import { OrderItemEntity } from './checkout/order-item.entity';
+import { CollectionPlantEntity } from './user/collection-plant.entity';
+import { StockPlantEntity } from './user/stock-plant.entity';
+import { PlantDealEntity } from './plant-deal/plant-deal.entity';
+import { AuctionEntity } from './plant-deal/auction.entity';
+import { BidEntity } from './plant-deal/bid.entity';
+import { WantedSwapEntity } from './plant-deal/wanted-swap.entity';
 import { CheckoutModule } from './checkout/checkout.module';
 import { ReviewModule } from './review/review.module';
 import { PlantDealModule } from './plant-deal/plant-deal.module';
 import { HuntModule } from './hunt/hunt.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
   imports: [
@@ -35,7 +36,7 @@ import { HuntModule } from './hunt/hunt.module';
         username: 'root',
         password: 'root',
         database: 'planthuntr',
-        entities: [Plant, Surname, User, Review, Hunt, PaymentMethod, Item, BasketItem, Order, OrderItem, CollectionPlant, StockPlant, PlantDeal, Auction, Bid, WantedSwap],
+        entities: [PlantEntity, SurnameEntity, UserEntity, ReviewEntity, HuntEntity, PaymentMethod, ItemEntity, BasketItemEntity, OrderEntity, OrderItemEntity, CollectionPlantEntity, StockPlantEntity, PlantDealEntity, AuctionEntity, BidEntity, WantedSwapEntity],
         autoLoadEntities: true,
         synchronize: true,
         logging: true,
@@ -48,6 +49,7 @@ import { HuntModule } from './hunt/hunt.module';
     ReviewModule,
     PlantDealModule,
     HuntModule,
+    AuthenticationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

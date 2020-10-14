@@ -1,31 +1,31 @@
 import { CacheKey, HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { CreatePlantDTO } from './dto/CreatePlantDTO';
-import { Plant } from './plant';
+import { CreatePlantDto } from './dto/CreatePlant.dto';
+import { PlantEntity } from './plant.entity';
 import { getRepository, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UpdatePlantDTO } from './dto/UpdatePlantDTO';
-import { Surname } from './surname';
+import { UpdatePlantDto } from './dto/UpdatePlant.dto';
+import { SurnameEntity } from './surname.entity';
 import { validate } from 'class-validator';
 
 @Injectable()
 export class PlantService {
   constructor(
-    @InjectRepository(Plant)
-    private plantRepository: Repository<Plant> = getRepository(Plant),
-    @InjectRepository(Surname)
-    private surnameRepository: Repository<Surname> = getRepository(Surname),
+    @InjectRepository(PlantEntity)
+    private plantRepository: Repository<PlantEntity> = getRepository(PlantEntity),
+    @InjectRepository(SurnameEntity)
+    private surnameRepository: Repository<SurnameEntity> = getRepository(SurnameEntity),
   ) {}
 
   @CacheKey('plants')
-  public async findAll(): Promise<Plant[]> {
+  public async findAll(): Promise<PlantEntity[]> {
     return await this.plantRepository.find();
   }
 
-  public async findById(id: string): Promise<Plant> {
+  public async findById(id: string): Promise<PlantEntity> {
     return await this.exists(id);
   }
 
-  public async search(name: string): Promise<Plant[] | null> {
+  public async search(name: string): Promise<PlantEntity[] | null> {
     return await this.plantRepository
       .createQueryBuilder('plant')
       .select('plant')
@@ -45,21 +45,21 @@ export class PlantService {
       .getMany();
   }
 
-  public async create(createPlantDTO: CreatePlantDTO): Promise<Plant> {
+  public async create(createPlantDTO: CreatePlantDto): Promise<PlantEntity> {
     if (createPlantDTO.isVerified === undefined) { createPlantDTO.isVerified = false;}
     await PlantService.validatePlant(createPlantDTO);
     return await this.plantRepository.save(createPlantDTO);
   }
 
-  public async update(id: string, newValue: UpdatePlantDTO): Promise<Plant | null> {
+  public async update(id: string, newValue: UpdatePlantDto): Promise<PlantEntity | null> {
     await this.exists(id);
     await this.plantRepository.update(id, newValue);
     return await this.plantRepository.findOne(id);
   }
 
-  public async addSurname(id: string, surname: string, plant: Plant): Promise<Surname> {
+  public async addSurname(id: string, surname: string, plant: PlantEntity): Promise<SurnameEntity> {
     await this.verifyIfUniqueSurname(id, surname);
-    const newSurname = new Surname();
+    const newSurname = new SurnameEntity();
     newSurname.plant = plant;
     newSurname.surname = surname;
     newSurname.plantId = id;
@@ -69,9 +69,9 @@ export class PlantService {
   }
 
   public async addSurnames(id: string, surnames: string[]) {
-    const plant: Plant = await this.exists(id);
-    let createdSurname: Surname;
-    const result: Surname[] = [];
+    const plant: PlantEntity = await this.exists(id);
+    let createdSurname: SurnameEntity;
+    const result: SurnameEntity[] = [];
     for (const surname of surnames) {
       createdSurname = await this.addSurname(id, surname, plant);
       result.push(createdSurname);
@@ -98,19 +98,19 @@ export class PlantService {
     }
   }
 
-  private static async validatePlant(plant: CreatePlantDTO) {
+  private static async validatePlant(plant: CreatePlantDto) {
     const errors = await validate(plant);
     if (errors.length > 0) {
       const _errors = errors.toString();
-      throw new HttpException({ message: 'Plant data validation failed', _errors }, HttpStatus.BAD_REQUEST);
+      throw new HttpException({ message: 'PlantEntity data validation failed', _errors }, HttpStatus.BAD_REQUEST);
     }
   }
 
-  private static async validateSurname(surname: Surname) {
+  private static async validateSurname(surname: SurnameEntity) {
     const errors = await validate(surname);
     if (errors.length > 0) {
       const _errors = errors.toString();
-      throw new HttpException({ message: 'Surname data validation failed', _errors }, HttpStatus.BAD_REQUEST);
+      throw new HttpException({ message: 'SurnameEntity data validation failed', _errors }, HttpStatus.BAD_REQUEST);
     }
   }
 }

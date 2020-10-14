@@ -1,10 +1,10 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
-import { Plant } from '../plant/plant';
-import { PlantDeal } from './plant-deal';
+import { PlantEntity } from '../plant/plant.entity';
+import { PlantDealEntity } from './plant-deal.entity';
 
 @Entity({ name: 'wanted_swaps' })
 @Unique('seller_plant', ['plant', 'plantDeal'])
-export class WantedSwap {
+export class WantedSwapEntity {
 
   @PrimaryGeneratedColumn(
     'uuid',
@@ -18,15 +18,15 @@ export class WantedSwap {
   })
   amount: number;
 
-  @OneToOne(() => Plant)
+  @OneToOne(() => PlantEntity)
   @JoinColumn({
     name: 'plant',
     referencedColumnName: 'id',
   })
-  plant: Plant;
+  plant: PlantEntity;
 
 
-  @ManyToOne(() => PlantDeal, plantDeal => plantDeal.wantedForSwap, {
+  @ManyToOne(() => PlantDealEntity, plantDeal => plantDeal.wantedForSwap, {
     nullable: false,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
@@ -34,5 +34,5 @@ export class WantedSwap {
   @JoinColumn({
     name: 'plant_deal',
   })
-  plantDeal: PlantDeal;
+  plantDeal: PlantDealEntity;
 }

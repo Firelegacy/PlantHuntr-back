@@ -1,9 +1,9 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { User } from './user';
-import { Plant } from '../plant/plant';
+import { UserEntity } from './user.entity';
+import { PlantEntity } from '../plant/plant.entity';
 
 @Entity({ name: 'collection_plants' })
-export class CollectionPlant {
+export class CollectionPlantEntity {
 
   @PrimaryGeneratedColumn(
     'uuid',
@@ -22,7 +22,7 @@ export class CollectionPlant {
   })
   acquisitionDate: Date;
 
-  @ManyToOne(() => User, (user) => user.collection, {
+  @ManyToOne(() => UserEntity, (user) => user.collection, {
     nullable: false,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
@@ -31,9 +31,9 @@ export class CollectionPlant {
     name: 'user',
     referencedColumnName: 'id',
   })
-  user: User;
+  user: UserEntity;
 
-  @ManyToOne(() => Plant, {
+  @ManyToOne(() => PlantEntity, {
     nullable: false,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
@@ -42,5 +42,5 @@ export class CollectionPlant {
     name: 'plant',
     referencedColumnName: 'id',
   })
-  plant: Plant;
+  plant: PlantEntity;
 }

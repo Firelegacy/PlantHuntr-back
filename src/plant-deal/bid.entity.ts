@@ -1,9 +1,9 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { User } from '../user/user';
-import { Auction } from './auction';
+import { UserEntity } from '../user/user.entity';
+import { AuctionEntity } from './auction.entity';
 
 @Entity({ name: 'bids' })
-export class Bid {
+export class BidEntity {
 
   @PrimaryGeneratedColumn(
     'uuid',
@@ -21,17 +21,17 @@ export class Bid {
   })
   timestamp: Date;
 
-  @OneToOne(() => User)
+  @OneToOne(() => UserEntity)
   @JoinColumn({
     name: 'user',
     referencedColumnName: 'id',
   })
-  user: User;
+  user: UserEntity;
 
-  @OneToOne(() => Auction)
+  @OneToOne(() => AuctionEntity)
   @JoinColumn({
     name: 'auction',
     referencedColumnName: 'id',
   })
-  auction: Auction;
+  auction: AuctionEntity;
 }

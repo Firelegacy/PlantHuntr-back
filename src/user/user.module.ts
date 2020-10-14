@@ -1,19 +1,19 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './user';
+import { UserEntity } from './user.entity';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { PaymentMethod } from './payment-method';
-import { StockPlant } from './stock-plant';
-import { Plant } from '../plant/plant';
-import { BasketItem } from '../checkout/basket-item';
-import { Hunt } from '../hunt/hunt';
-import { Review } from '../review/review';
-import { CollectionPlant } from './collection-plant';
+import { StockPlantEntity } from './stock-plant.entity';
+import { PlantEntity } from '../plant/plant.entity';
+import { BasketItemEntity } from '../checkout/basket-item.entity';
+import { HuntEntity } from '../hunt/hunt.entity';
+import { ReviewEntity } from '../review/review.entity';
+import { CollectionPlantEntity } from './collection-plant.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, PaymentMethod, StockPlant, Plant, BasketItem, Hunt, Review, CollectionPlant]),
+    TypeOrmModule.forFeature([UserEntity, PaymentMethod, StockPlantEntity, PlantEntity, BasketItemEntity, HuntEntity, ReviewEntity, CollectionPlantEntity]),
   ],
   providers: [UserService],
   controllers: [UserController],

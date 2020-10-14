@@ -1,9 +1,9 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
-import { User } from '../user/user';
+import { UserEntity } from '../user/user.entity';
 
 @Entity({ name: 'reviews' })
 @Unique('buyer_seller', ['buyer', 'seller'])
-export class Review {
+export class ReviewEntity {
 
   @PrimaryGeneratedColumn('uuid', { name: 'id_rating' })
   id: string;
@@ -36,20 +36,20 @@ export class Review {
   })
   buyerComment: string;
 
-  @ManyToOne(() => User, user => user.clientReviews, {
+  @ManyToOne(() => UserEntity, user => user.clientReviews, {
     nullable: false,
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'seller' })
-  seller: User;
+  seller: UserEntity;
 
-  @ManyToOne(() => User, user => user.sellerReviews, {
+  @ManyToOne(() => UserEntity, user => user.sellerReviews, {
     nullable: false,
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'buyer' })
-  buyer: User;
+  buyer: UserEntity;
 
 }

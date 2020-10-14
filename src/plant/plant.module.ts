@@ -2,13 +2,13 @@ import { CacheModule, Module } from '@nestjs/common';
 import { PlantService } from './plant.service';
 import { PlantController } from './plant.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Plant } from './plant';
-import { Surname } from './surname';
+import { PlantEntity } from './plant.entity';
+import { SurnameEntity } from './surname.entity';
 
 @Module({
   imports: [
     CacheModule.register(),
-    TypeOrmModule.forFeature([Plant, Surname]),
+    TypeOrmModule.forFeature([PlantEntity, SurnameEntity]),
   ],
   providers: [PlantService],
   controllers: [PlantController],

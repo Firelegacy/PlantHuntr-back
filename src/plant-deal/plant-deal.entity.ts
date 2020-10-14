@@ -1,13 +1,13 @@
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Auction } from './auction';
-import { User } from '../user/user';
-import { Plant } from '../plant/plant';
+import { AuctionEntity } from './auction.entity';
+import { UserEntity } from '../user/user.entity';
+import { PlantEntity } from '../plant/plant.entity';
 import { DealType } from '../enum/DealType';
 import { TransactionType } from '../enum/TransactionType';
-import { WantedSwap } from './wanted-swap';
+import { WantedSwapEntity } from './wanted-swap.entity';
 
 @Entity({ name: 'plant_deals' })
-export class PlantDeal {
+export class PlantDealEntity {
 
   @PrimaryGeneratedColumn(
     'uuid',
@@ -48,30 +48,30 @@ export class PlantDeal {
   })
   shippingMin: number;
 
-  @OneToOne(() => Plant)
+  @OneToOne(() => PlantEntity)
   @JoinColumn({
     name: 'plant',
     referencedColumnName: 'id',
   })
-  plant: Plant;
+  plant: PlantEntity;
 
-  @OneToOne(() => User)
+  @OneToOne(() => UserEntity)
   @JoinColumn({
     name: 'user',
     referencedColumnName: 'id',
   })
-  user: User;
+  user: UserEntity;
 
-  @OneToOne(() => User)
+  @OneToOne(() => UserEntity)
   @JoinColumn({
     name: 'acquirer',
     referencedColumnName: 'id',
   })
-  acquirer: User;
+  acquirer: UserEntity;
 
-  @OneToOne(() => Auction)
-  auction: Auction;
+  @OneToOne(() => AuctionEntity)
+  auction: AuctionEntity;
 
-   @OneToMany(() => WantedSwap, wantedSwap => wantedSwap.plantDeal)
-   wantedForSwap: WantedSwap[];
+  @OneToMany(() => WantedSwapEntity, wantedSwap => wantedSwap.plantDeal)
+  wantedForSwap: WantedSwapEntity[];
 }

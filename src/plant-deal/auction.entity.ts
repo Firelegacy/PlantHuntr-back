@@ -1,10 +1,10 @@
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { PlantDeal } from './plant-deal';
-import { Bid } from './bid';
+import { PlantDealEntity } from './plant-deal.entity';
+import { BidEntity } from './bid.entity';
 import { AuctionStatus } from '../enum/AuctionStatus';
 
 @Entity({ name: 'auctions' })
-export class Auction {
+export class AuctionEntity {
 
   @PrimaryGeneratedColumn(
     'uuid',
@@ -44,14 +44,14 @@ export class Auction {
   })
   bidRaise: number;
 
-  @OneToOne(() => Bid, {
+  @OneToOne(() => BidEntity, {
     nullable: true,
   })
   @JoinColumn({
     name: 'winning_bid',
     referencedColumnName: 'id',
   })
-  winningBid: Bid;
+  winningBid: BidEntity;
 
   @Column({
     name: 'status',
@@ -61,7 +61,7 @@ export class Auction {
   })
   status: AuctionStatus;
 
-  @OneToOne(() => PlantDeal, {
+  @OneToOne(() => PlantDealEntity, {
     nullable: false,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
@@ -70,8 +70,8 @@ export class Auction {
     name: 'plant_deal',
     referencedColumnName: 'id',
   })
-  plantDeal: PlantDeal;
+  plantDeal: PlantDealEntity;
 
-  @OneToMany(() => Bid, (bid) => bid.auction)
-  bids: Bid[];
+  @OneToMany(() => BidEntity, (bid) => bid.auction)
+  bids: BidEntity[];
 }
